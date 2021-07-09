@@ -5,6 +5,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtSql import QSqlTableModel
 
+import whoarder.clippings as clippingsParser
 
 class notes_model:
     def __init__(self):
@@ -21,3 +22,7 @@ class notes_model:
         for columnIndex, header in enumerate(headers):
             clippings_table.setHeaderData(columnIndex, Qt.Orientation.Horizontal, header)
         return clippings_table
+
+    def importClippings(self, file):
+        clippings = clippingsParser.Clippings(file)
+        print(clippings.export)
