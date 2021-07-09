@@ -2,7 +2,13 @@ from PyQt6 import QtSql
 from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtSql import QSqlDatabase
 
-INIT_QUERY = ("""
+INIT_QUERY = (
+"""
+CREATE TABLE IF NOT EXISTS clippingtypes (
+    type CHAR(1) PRIMARY KEY NOT NULL
+)
+""",
+"""
 CREATE TABLE IF NOT EXISTS books (
     book_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     book_title TEXT UNIQUE,
@@ -14,12 +20,20 @@ CREATE TABLE IF NOT EXISTS clippings (
     book TEXT NOT NULL,
     author TEXT,
     clipping TEXT UNIQUE NOT NULL,
+    type CHAR(1) NOT NULL REFERENCES clippingtypes(type),
     start_location INTEGER NOT NULL,
     end_location INTEGER NOT NULL,
     date DATE,
 
     FOREIGN KEY (book) REFERENCES books(book_id)
 );
+""",
+# b: Bookmark; h: Highlight; n: Note
+"""
+INSERT INTO TABLES clippingtypes('type') VALUES
+    ('b') 
+    ('h')
+    ('n');
 """)
 
 DATABASE = "QSQLITE"
