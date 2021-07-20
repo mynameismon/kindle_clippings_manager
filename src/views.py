@@ -36,15 +36,16 @@ class Window(QMainWindow):
         self.centralWidget.setLayout(self.layout)
 
         self.contactsModel = notes_model()
-        self.importClippings()
         self.setupUI()
 
     def importClippings(self):
         """Imports Clippings."""
-        filePicker = QFileDialog(self, "Choose a file to import clippings from")
+        filePicker = QFileDialog(self, "Choose a file to import clippings from", filter = 'Text Files (*.txt)')
         filePicker.setViewMode(filePicker.ViewMode.Detail)
         filePicker.setFileMode(filePicker.FileMode.ExistingFile)
-        filePicker.open()
+        fileName = filePicker.getOpenFileName(self, 'Choose a file to open', filter = 'Text Files (*.txt)')[0]
+        self.contactsModel.importClippings(fileName)
+        print(fileName)
         
 
     def setupUI(self):
