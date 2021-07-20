@@ -16,6 +16,7 @@ from PyQt6.QtWidgets import (
     QTableView,
     QVBoxLayout,
     QWidget,
+    QFileDialog
 )
 
 from src.models import notes_model
@@ -35,12 +36,16 @@ class Window(QMainWindow):
         self.centralWidget.setLayout(self.layout)
 
         self.contactsModel = notes_model()
-        self.importMyClippings()
+        self.importClippings()
         self.setupUI()
 
-    # Placeholder function; will be replaced once parser is built
-    def importMyClippings(self):
-        pass
+    def importClippings(self):
+        """Imports Clippings."""
+        filePicker = QFileDialog(self, "Choose a file to import clippings from")
+        filePicker.setViewMode(filePicker.ViewMode.Detail)
+        filePicker.setFileMode(filePicker.FileMode.ExistingFile)
+        filePicker.open()
+        
 
     def setupUI(self):
         """Setup the main window's GUI."""
@@ -53,8 +58,8 @@ class Window(QMainWindow):
         for column_number in (0, 5, 6, 7):
             self.table.hideColumn(column_number)
         # Create buttons
-        self.addButton = QPushButton("Add...")
-        # self.addButton.clicked.connect(self.openAddDialog)
+        self.addButton = QPushButton("Import")
+        self.addButton.clicked.connect(self.importClippings)
         self.deleteButton = QPushButton("Delete")
         # self.deleteButton.clicked.connect(self.deleteContact)
         self.clearAllButton = QPushButton("Clear All")
@@ -68,4 +73,3 @@ class Window(QMainWindow):
         self.layout.addWidget(self.table)
         self.layout.addLayout(layout)
 
-    

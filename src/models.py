@@ -23,6 +23,7 @@ class notes_model:
             clippings_table.setHeaderData(columnIndex, Qt.Orientation.Horizontal, header)
         return clippings_table
 
-    def importClippings(self, file):
+    def importClippings(file):
         clippings = clippingsParser.Clippings(file)
-        print(clippings.export)
+        clippings._fetch()
+        print(clippings.book_author_couples)
